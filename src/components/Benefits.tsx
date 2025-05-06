@@ -25,7 +25,7 @@ export default function Benefits() {
     <div id="benefits" className="py-32 bg-[#FFFCF7] scroll-mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-4xl font-bold text-center mb-6 text-gray-900">Enterprise-Ready Multi-Agent Platform</h2>
-        <p className="text-xl text-gray-600 text-center mb-24 max-w-3xl mx-auto">
+        <p className="text-xl text-center mb-16 max-w-3xl text-text-secondary font-semibold leading-relaxed mx-auto">
           Built for organizations that demand security, scalability, and complete control over their AI infrastructure
         </p>
         <div className="grid md:grid-cols-3 gap-12">

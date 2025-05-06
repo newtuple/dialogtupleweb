@@ -39,21 +39,21 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl p-8 max-w-md w-full mx-4 relative">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-2xl p-8 max-w-md w-full mx-4 relative shadow-2xl">
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 text-gray-400 hover:text-gray-600 transition-colors"
+          className="absolute right-6 top-6 text-gray-400 hover:text-[#006666] transition-colors"
         >
           <X className="w-6 h-6" />
         </button>
 
-        <h2 className="text-2xl font-bold mb-2 text-gray-900">Request a Demo</h2>
-        <p className="text-gray-600 mb-6">Fill out the form below and we'll get back to you shortly.</p>
+        <h2 className="text-3xl font-bold mb-3 text-[#006666]">Request a Demo</h2>
+        <p className="text-gray-600 mb-8 text-lg">Fill out the form below and we'll get back to you shortly.</p>
 
-        <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
+        <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
               Name
             </label>
             <input
@@ -61,12 +61,13 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
               id="name"
               name="name"
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#006666] focus:border-[#006666] transition-colors"
+              placeholder="Enter your full name"
             />
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
               Work Email
             </label>
             <input
@@ -74,12 +75,13 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
               id="email"
               name="email"
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#006666] focus:border-[#006666] transition-colors"
+              placeholder="you@company.com"
             />
           </div>
 
           <div>
-            <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="company" className="block text-sm font-semibold text-gray-700 mb-2">
               Company
             </label>
             <input
@@ -87,39 +89,45 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
               id="company"
               name="company"
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#006666] focus:border-[#006666] transition-colors"
+              placeholder="Your company name"
             />
           </div>
 
           <div>
-            <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
               Message
             </label>
             <textarea
               id="message"
               name="message"
               rows={4}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#006666] focus:border-[#006666] transition-colors"
+              placeholder="Tell us about your needs..."
             ></textarea>
           </div>
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full py-3 px-4 rounded-lg font-semibold text-white transition-all duration-200 ${
+            className={`w-full py-4 px-6 rounded-xl font-semibold text-white text-lg transition-all duration-300 ${
               isSubmitting
                 ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-primary-600 hover:bg-primary-700 hover:shadow-lg'
+                : 'bg-[#006666] hover:bg-[#008080] hover:shadow-lg hover:scale-[1.02]'
             }`}
           >
             {isSubmitting ? 'Sending...' : 'Request Demo'}
           </button>
 
           {submitStatus === 'success' && (
-            <p className="text-green-600 text-center">Request sent successfully!</p>
+            <p className="text-green-600 text-center font-semibold text-lg">
+              Request sent successfully! We'll be in touch soon.
+            </p>
           )}
           {submitStatus === 'error' && (
-            <p className="text-red-600 text-center">Something went wrong. Please try again.</p>
+            <p className="text-red-600 text-center font-semibold text-lg">
+              Something went wrong. Please try again or contact support.
+            </p>
           )}
         </form>
       </div>

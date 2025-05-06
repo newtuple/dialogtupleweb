@@ -37,7 +37,7 @@ const features = [
 
 export default function Features() {
   return (
-    <div id="features" className="py-32 bg-white scroll-mt-16">
+    <div id="features" className="py-32  bg-[#edf6f9] scroll-mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-4xl font-bold text-center mb-24 text-gray-900">Core Features</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
@@ -48,7 +48,7 @@ export default function Features() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.3 }}
               transition={{ duration: 0.1, delay: index * 0.1 }}
-              className="text-center"
+              className="text-center h-[400px] flex flex-col items-center"
             >
               <motion.div 
                 initial={{ opacity: 1, scale: 0.5 }}
@@ -56,7 +56,7 @@ export default function Features() {
                 viewport={{ once: false }}
                 transition={{ duration: 0.2 }}
                 whileHover={{ scale: 1.1, rotate: 5 }}
-                className="w-20 h-20 mx-auto bg-white rounded-2xl flex items-center justify-center mb-8 shadow-enterprise border-2 border-[#006666]"
+                className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-enterprise border-2 border-[#006666]"
               >
                 {feature.icon}
               </motion.div>
@@ -65,6 +65,7 @@ export default function Features() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: false }}
                 transition={{ delay: 0.3 + index * 0.1, duration: 0.2 }}
+                className="bg-white p-8 rounded-2xl border-2 border-[#006666] shadow-lg group-hover:shadow-xl transition-all duration-300 mt-8 h-full w-full flex flex-col"
               >
                 <h3 className="text-2xl font-semibold mb-4 text-[#006666]">{feature.title}</h3>
                 <p className="text-gray-600 text-lg leading-relaxed">{feature.description}</p>
