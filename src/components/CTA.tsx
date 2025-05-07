@@ -1,5 +1,7 @@
-
+import DemoModal from "./DemoModal";
+import { useState } from "react";
 export default function CTA() {
+  const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
   return (
     // bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 
     <div className="bg-[#006666] p-32 y-32 text-white">
@@ -12,11 +14,13 @@ export default function CTA() {
           <button className="px-10 py-4 bg-white text-[#006666] rounded-full font-semibold hover:bg-primary-50 transition-colors text-lg shadow-enterprise-lg hover:shadow-enterprise">
             Start Free Trial
           </button>
-          <button className="px-10 py-4 border-2 border-white text-white rounded-full font-semibold hover:bg-white/10 transition-colors text-lg">
+          <button onClick={() => setIsDemoModalOpen(true)} className="px-10 py-4 border-2 border-white text-white rounded-full font-semibold hover:bg-white/10 transition-colors text-lg">
             Request Demo
           </button>
         </div>
       </div>
+      <DemoModal isOpen={isDemoModalOpen} onClose={() => setIsDemoModalOpen(false)} />
+
     </div>
   );
 }
