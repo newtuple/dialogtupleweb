@@ -1,4 +1,3 @@
-import React from 'react';
 import { Users, Server, HeadphonesIcon as HeadphoneIcon, BarChart } from 'lucide-react';
 import { motion } from 'framer-motion';
 

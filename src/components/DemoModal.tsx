@@ -12,24 +12,63 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const formRef = useRef<HTMLFormElement>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setIsSubmitting(true);
+  //   setSubmitStatus('idle');
+
+  //   try {
+  //     await emailjs.sendForm(
+  //       'YOUR_SERVICE_ID',
+  //       'YOUR_TEMPLATE_ID',
+  //       formRef.current!,
+  //       'YOUR_PUBLIC_KEY'
+  //     );
+  //     setSubmitStatus('success');
+  //     setTimeout(() => {
+  //       onClose();
+  //       setSubmitStatus('idle');
+  //     }, 2000);
+  //   } catch (error) {
+  //     setSubmitStatus('error');
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus('idle');
-
+  
+    const formData = new FormData(e.currentTarget);
+  
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      company: formData.get('company'),
+      message: formData.get('message'),
+    };
+  
     try {
-      await emailjs.sendForm(
-        'YOUR_SERVICE_ID',
-        'YOUR_TEMPLATE_ID',
-        formRef.current!,
-        'YOUR_PUBLIC_KEY'
-      );
-      setSubmitStatus('success');
-      setTimeout(() => {
-        onClose();
-        setSubmitStatus('idle');
-      }, 2000);
-    } catch (error) {
+      const res = await fetch('/.netlify/functions/sendEmail', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+  
+      const result = await res.json();
+      console.log(result)
+      if (result.success) {
+        setSubmitStatus('success');
+        setTimeout(() => {
+          onClose();
+          setSubmitStatus('idle');
+        }, 2500);
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (err) {
+      console.error('Submit error:', err);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
