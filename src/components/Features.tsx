@@ -1,5 +1,4 @@
-import React from 'react';
-import { Shield, Cloud, Rocket, Puzzle as PuzzlePiece, Box, Repeat, Smartphone, BookOpen, Zap } from 'lucide-react';
+import { Puzzle as PuzzlePiece, Box, Repeat, Smartphone, BookOpen, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const features = [
