@@ -100,7 +100,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
               id="name"
               name="name"
               required
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#006666] focus:border-[#006666] transition-colors"
+              className="text-gray-900 w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#006666] focus:border-[#006666] transition-colors"
               placeholder="Enter your full name"
             />
           </div>
@@ -114,7 +114,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
               id="email"
               name="email"
               required
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#006666] focus:border-[#006666] transition-colors"
+              className="text-gray-900 w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#006666] focus:border-[#006666] transition-colors"
               placeholder="you@company.com"
             />
           </div>
@@ -128,7 +128,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
               id="company"
               name="company"
               required
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#006666] focus:border-[#006666] transition-colors"
+              className="text-gray-900 w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#006666] focus:border-[#006666] transition-colors"
               placeholder="Your company name"
             />
           </div>
@@ -141,7 +141,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
               id="message"
               name="message"
               rows={4}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#006666] focus:border-[#006666] transition-colors"
+              className="text-gray-900 w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#006666] focus:border-[#006666] transition-colors"
               placeholder="Tell us about your needs..."
             ></textarea>
           </div>
