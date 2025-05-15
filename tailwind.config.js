@@ -26,6 +26,29 @@ export default {
         'enterprise': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
         'enterprise-lg': '0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03)',
       },
+      animation: {
+        'glow': 'glow 3s ease-in-out infinite',
+        float: 'float 3s ease-in-out infinite',
+        'border-flow': 'border-flow 3s linear infinite',
+      },
+      keyframes: {
+        glow: {
+          '0%, 100%': {
+            'box-shadow': '0 0 2px rgba(139, 92, 246, 0.5), 0 0 4px rgba(139, 92, 246, 0.3), 0 0 8px rgba(139, 92, 246, 0.2), 0 0 16px rgba(139, 92, 246, 0.1), inset 0 0 8px rgba(139, 92, 246, 0.2)',
+          },
+          '50%': {
+            'box-shadow': '0 0 4px rgba(139, 92, 246, 0.8), 0 0 8px rgba(139, 92, 246, 0.5), 0 0 16px rgba(139, 92, 246, 0.3), 0 0 32px rgba(139, 92, 246, 0.2), inset 0 0 16px rgba(139, 92, 246, 0.4)',
+          },
+        },
+        float: {
+          '0%, 100%': { transform: 'translate(0, 0)' },
+          '50%': { transform: 'translate(10px, -10px)' },
+        },
+        'border-flow': {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
+        }
+      },
     },
   },
   plugins: [],

@@ -12,29 +12,6 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const formRef = useRef<HTMLFormElement>(null);
 
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   setIsSubmitting(true);
-  //   setSubmitStatus('idle');
-
-  //   try {
-  //     await emailjs.sendForm(
-  //       'YOUR_SERVICE_ID',
-  //       'YOUR_TEMPLATE_ID',
-  //       formRef.current!,
-  //       'YOUR_PUBLIC_KEY'
-  //     );
-  //     setSubmitStatus('success');
-  //     setTimeout(() => {
-  //       onClose();
-  //       setSubmitStatus('idle');
-  //     }, 2000);
-  //   } catch (error) {
-  //     setSubmitStatus('error');
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -79,20 +56,20 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl p-8 max-w-md w-full mx-4 relative shadow-2xl">
+      <div className="bg-[#1a1b1e] rounded-2xl p-8 max-w-md w-full mx-4 relative shadow-2xl border border-gray-800">
         <button
           onClick={onClose}
-          className="absolute right-6 top-6 text-gray-400 hover:text-[#006666] transition-colors"
+          className="absolute right-6 top-6 text-gray-400 hover:text-[#8b5cf6] transition-colors"
         >
           <X className="w-6 h-6" />
         </button>
 
-        <h2 className="text-3xl font-bold mb-3 text-[#006666]">Request a Demo</h2>
-        <p className="text-gray-600 mb-8 text-lg">Fill out the form below and we'll get back to you shortly.</p>
+        <h2 className="text-3xl font-bold mb-3 text-white">Request a Demo</h2>
+        <p className="text-gray-300 mb-8 text-lg">Fill out the form below and we'll get back to you shortly.</p>
 
         <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+            <label htmlFor="name" className="block text-sm font-semibold text-gray-300 mb-2">
               Name
             </label>
             <input
@@ -100,13 +77,13 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
               id="name"
               name="name"
               required
-              className="text-gray-900 w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#006666] focus:border-[#006666] transition-colors"
+              className="text-white w-full px-4 py-3 bg-[#2a2b2e] border-2 border-gray-700 rounded-xl focus:ring-2 focus:ring-[#8b5cf6] focus:border-[#8b5cf6] transition-colors placeholder-gray-500"
               placeholder="Enter your full name"
             />
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+            <label htmlFor="email" className="block text-sm font-semibold text-gray-300 mb-2">
               Work Email
             </label>
             <input
@@ -114,13 +91,13 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
               id="email"
               name="email"
               required
-              className="text-gray-900 w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#006666] focus:border-[#006666] transition-colors"
+              className="text-white w-full px-4 py-3 bg-[#2a2b2e] border-2 border-gray-700 rounded-xl focus:ring-2 focus:ring-[#8b5cf6] focus:border-[#8b5cf6] transition-colors placeholder-gray-500"
               placeholder="you@company.com"
             />
           </div>
 
           <div>
-            <label htmlFor="company" className="block text-sm font-semibold text-gray-700 mb-2">
+            <label htmlFor="company" className="block text-sm font-semibold text-gray-300 mb-2">
               Company
             </label>
             <input
@@ -128,20 +105,20 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
               id="company"
               name="company"
               required
-              className="text-gray-900 w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#006666] focus:border-[#006666] transition-colors"
+              className="text-white w-full px-4 py-3 bg-[#2a2b2e] border-2 border-gray-700 rounded-xl focus:ring-2 focus:ring-[#8b5cf6] focus:border-[#8b5cf6] transition-colors placeholder-gray-500"
               placeholder="Your company name"
             />
           </div>
 
           <div>
-            <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
+            <label htmlFor="message" className="block text-sm font-semibold text-gray-300 mb-2">
               Message
             </label>
             <textarea
               id="message"
               name="message"
               rows={4}
-              className="text-gray-900 w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#006666] focus:border-[#006666] transition-colors"
+              className="text-white w-full px-4 py-3 bg-[#2a2b2e] border-2 border-gray-700 rounded-xl focus:ring-2 focus:ring-[#8b5cf6] focus:border-[#8b5cf6] transition-colors placeholder-gray-500"
               placeholder="Tell us about your needs..."
             ></textarea>
           </div>
@@ -151,20 +128,20 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
             disabled={isSubmitting}
             className={`w-full py-4 px-6 rounded-xl font-semibold text-white text-lg transition-all duration-300 ${
               isSubmitting
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-[#006666] hover:bg-[#008080] hover:shadow-lg hover:scale-[1.02]'
+                ? 'bg-gray-600 cursor-not-allowed'
+                : 'bg-[#8b5cf6] hover:bg-[#7c3aed] hover:shadow-lg hover:scale-[1.02]'
             }`}
           >
             {isSubmitting ? 'Sending...' : 'Request Demo'}
           </button>
 
           {submitStatus === 'success' && (
-            <p className="text-green-600 text-center font-semibold text-lg">
+            <p className="text-green-400 text-center font-semibold text-lg">
               Request sent successfully! We'll be in touch soon.
             </p>
           )}
           {submitStatus === 'error' && (
-            <p className="text-red-600 text-center font-semibold text-lg">
+            <p className="text-red-400 text-center font-semibold text-lg">
               Something went wrong. Please try again or contact support.
             </p>
           )}
