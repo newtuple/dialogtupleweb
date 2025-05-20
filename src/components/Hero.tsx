@@ -32,7 +32,7 @@ export default function Hero() {
   return (
     <>
       {/* Navigation */}
-      <nav className="fixed w-full bg-white/80 backdrop-blur-sm border-b border-gray-100 z-50">
+      <nav className="fixed w-full bg-gradient-to-r from-white/80 via-white to-white/60 backdrop-blur-sm border-b border-gray-100 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center">
@@ -112,15 +112,16 @@ export default function Hero() {
               />
             </div>
             <div className={`transition-all duration-1000 delay-300 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              <p className="text-xl text-gray-500 mb-10">
+              <p className="text-xl text-gray-500 mb-4">
                 by <a href="https://www.newtuple.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#006666] transition-colors">Newtuple</a>
               </p>
+              <p className="text-2xl font-semibold text-[#006666]">Unleash AI-Driven Conversations</p>
             </div>
             <div className="max-w-4xl mx-auto">
-              <h1 className={`text-5xl md:text-6xl mb-10 font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#006666] to-[#008080] leading-tight transition-all duration-1000 delay-500 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+              <h1 className={`text-5xl md:text-6xl mb-6 font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#006666] to-[#008080] leading-tight transition-all duration-1000 delay-500 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 Multi-Agent Chatbots. Enterprise-Ready. Customizable. Anywhere.
               </h1>
-              <p className={`text-xl mb-16 text-gray-600 leading-relaxed transition-all duration-1000 delay-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+              <p className={`text-xl mb-12 text-gray-600 leading-relaxed transition-all duration-1000 delay-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 A cutting-edge accelerator blending traditional chatbot platforms with modern multi-agent capabilities, enabling intelligent, context-aware routing and interactions.
               </p>
             </div>
@@ -128,13 +129,21 @@ export default function Hero() {
               <button className="px-8 py-4 bg-gradient-to-r from-[#006666] to-[#008080] text-white rounded-full font-semibold hover:opacity-90 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
                 Start Free Trial
               </button>
-              <button 
+              <button
                 onClick={() => setIsDemoModalOpen(true)}
                 className="px-8 py-4 border-2 border-[#006666] text-[#006666] rounded-full font-semibold hover:bg-[#006666] hover:text-white transition-all duration-300 hover:scale-105 group relative overflow-hidden"
               >
                 <span className="relative z-10">Request Demo</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-[#006666] to-[#008080] transform translate-y-full transition-transform duration-300 group-hover:translate-y-0"></div>
               </button>
+              <a
+                href="https://www.youtube.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-4 border-2 border-transparent text-[#006666] rounded-full font-semibold hover:bg-[#f0f7f7] transition-all duration-300 hover:scale-105"
+              >
+                Watch Video
+              </a>
             </div>
           </div>
         </div>
