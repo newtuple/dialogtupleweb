@@ -1,6 +1,6 @@
 import React from 'react';
 import { Users, Server, HeadphonesIcon as HeadphoneIcon, BarChart } from 'lucide-react';
-import { motion } from 'framer-motion';
+import AnimatedCard from './AnimatedCard';
 
 const users = [
   {
@@ -32,34 +32,18 @@ export default function WhoUses() {
         <h2 className="text-4xl font-bold text-center mb-24 text-gray-900">Who Benefits from Dialogtuple?</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
           {users.map((user, index) => (
-            <motion.div 
+            <AnimatedCard
               key={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.3 }}
-              transition={{ duration: 0.1, delay: index * 0.1 }}
-              className="text-center"
-            >
-              <motion.div 
-                initial={{ opacity: 1, scale: 0.5 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: false }}
-                transition={{ duration: 0.2 }}
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                className="w-20 h-20 mx-auto bg-white rounded-2xl flex items-center justify-center mb-8 shadow-enterprise border-2 border-[#006666]"
-              >
-                {user.icon}
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false }}
-                transition={{ delay: 0.3 + index * 0.1, duration: 0.2 }}
-              >
-                <h3 className="text-2xl font-semibold mb-4 text-[#006666]">{user.title}</h3>
-                <p className="text-gray-600 text-lg leading-relaxed">{user.description}</p>
-              </motion.div>
-            </motion.div>
+              icon={user.icon}
+              title={user.title}
+              description={user.description}
+              index={index}
+              containerClassName="text-center"
+              iconWrapperClassName="w-20 h-20 mx-auto bg-white rounded-2xl flex items-center justify-center mb-8 shadow-enterprise border-2 border-[#006666]"
+              titleClassName="text-2xl font-semibold mb-4 text-[#006666]"
+              descriptionClassName="text-gray-600 text-lg leading-relaxed"
+              whileHover={{ scale: 1.1, rotate: 5 }}
+            />
           ))}
         </div>
       </div>

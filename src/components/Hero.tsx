@@ -1,17 +1,15 @@
 import React from 'react';
 import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import DemoModal from './DemoModal';
 
 export default function Hero() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
   const [activeHash, setActiveHash] = useState('');
 
   useEffect(() => {
-    setIsVisible(true);
-
     // Update active hash on load and hash change
     const updateHash = () => setActiveHash(window.location.hash);
     window.addEventListener('hashchange', updateHash);
@@ -32,7 +30,7 @@ export default function Hero() {
   return (
     <>
       {/* Navigation */}
-      <nav className="fixed w-full bg-white/80 backdrop-blur-sm border-b border-gray-100 z-50">
+      <nav className="fixed w-full bg-gradient-to-r from-white/80 via-white to-white/60 backdrop-blur-sm border-b border-gray-100 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center">
@@ -104,38 +102,66 @@ export default function Hero() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="flex flex-col items-center text-center">
-            <div className={`mb-10 transition-all duration-1000 ease-out ${isVisible ? 'opacity-90 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              <img 
-                src="/dialoglogo.png" 
-                alt="Dialogtuple Logo" 
-                className="h-20 w-auto object-contain" 
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="mb-10 opacity-90"
+            >
+              <img
+                src="/dialoglogo.png"
+                alt="Dialogtuple Logo"
+                className="h-20 w-auto object-contain"
               />
-            </div>
-            <div className={`transition-all duration-1000 delay-300 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              <p className="text-xl text-gray-500 mb-10">
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <p className="text-xl text-gray-500 mb-4">
                 by <a href="https://www.newtuple.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#006666] transition-colors">Newtuple</a>
               </p>
-            </div>
-            <div className="max-w-4xl mx-auto">
-              <h1 className={`text-5xl md:text-6xl mb-10 font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#006666] to-[#008080] leading-tight transition-all duration-1000 delay-500 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+              <p className="text-2xl font-semibold text-[#006666]">Unleash AI-Driven Conversations</p>
+            </motion.div>
+            <motion.div
+              className="max-w-4xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <h1 className="text-5xl md:text-6xl mb-6 font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#006666] to-[#008080] leading-tight">
                 Multi-Agent Chatbots. Enterprise-Ready. Customizable. Anywhere.
               </h1>
-              <p className={`text-xl mb-16 text-gray-600 leading-relaxed transition-all duration-1000 delay-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+              <p className="text-xl mb-12 text-gray-600 leading-relaxed">
                 A cutting-edge accelerator blending traditional chatbot platforms with modern multi-agent capabilities, enabling intelligent, context-aware routing and interactions.
               </p>
-            </div>
-            <div className={`flex flex-col sm:flex-row gap-6 transition-all duration-1000 delay-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            </motion.div>
+            <motion.div
+              className="flex flex-col sm:flex-row gap-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+            >
               <button className="px-8 py-4 bg-gradient-to-r from-[#006666] to-[#008080] text-white rounded-full font-semibold hover:opacity-90 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
                 Start Free Trial
               </button>
-              <button 
+              <button
                 onClick={() => setIsDemoModalOpen(true)}
                 className="px-8 py-4 border-2 border-[#006666] text-[#006666] rounded-full font-semibold hover:bg-[#006666] hover:text-white transition-all duration-300 hover:scale-105 group relative overflow-hidden"
               >
                 <span className="relative z-10">Request Demo</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-[#006666] to-[#008080] transform translate-y-full transition-transform duration-300 group-hover:translate-y-0"></div>
               </button>
-            </div>
+              <a
+                href="https://www.youtube.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-4 border-2 border-transparent text-[#006666] rounded-full font-semibold hover:bg-[#f0f7f7] transition-all duration-300 hover:scale-105"
+              >
+                Watch Video
+              </a>
+            </motion.div>
           </div>
         </div>
       </div>
