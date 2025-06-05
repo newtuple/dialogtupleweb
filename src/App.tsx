@@ -4,6 +4,8 @@ import Features from './components/Features';
 import HowItWorks from './components/HowItWorks';
 import WhoUses from './components/WhoUses';
 import CTA from './components/CTA';
+import Carousal from './components/Carousal';
+import AgentsInfo from './components/AgentsInfo';
 
 function App() {
   return (
@@ -11,8 +13,10 @@ function App() {
       <Hero />
       <Benefits />
       <Features />
+      <AgentsInfo/>
       <HowItWorks />
       <WhoUses />
+      <Carousal/>
       <CTA />
     </div>
   );
