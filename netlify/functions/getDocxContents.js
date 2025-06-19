@@ -26,6 +26,7 @@ exports.handler = async (event) => {
 
     if (listError) {
       console.error('Error listing files:', listError);
+      console.log('SUPABASE_URL:', process.env.SUPABASE_URL);
       return {
         statusCode: 500,
         body: JSON.stringify({ 
