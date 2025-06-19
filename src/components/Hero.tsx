@@ -41,6 +41,66 @@ export default function Hero() {
     return () => window.removeEventListener('hashchange', updateHash);
   }, []);
 
+  // Fetch DOCX contents from Netlify function
+  useEffect(() => {
+    const fetchDocxContents = async () => {
+      try {
+        console.log('Attempting to fetch DOCX contents...');
+        const response = await fetch('/.netlify/functions/getDocxContents');
+        
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
+        
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('Response error text:', errorText);
+          throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+        }
+        
+        // Check content type before parsing
+        const contentType = response.headers.get('content-type');
+        console.log('Content-Type:', contentType);
+        
+        if (!contentType || !contentType.includes('application/json')) {
+          const responseText = await response.text();
+          console.error('Non-JSON response received:', responseText.substring(0, 500));
+          throw new Error(`Expected JSON response but got: ${contentType}`);
+        }
+        
+        const data = await response.json();
+        console.log('DOCX Contents Data:', data);
+        
+        // Log individual files for easier viewing
+        if (data.files && data.files.length > 0) {
+          console.log(`Found ${data.files.length} DOCX files:`);
+          data.files.forEach((file: any, index: number) => {
+            console.log(`File ${index + 1}: ${file.name}`);
+            console.log(`Content preview:`, file.content.substring(0, 200) + '...');
+            if (file.warnings && file.warnings.length > 0) {
+              console.log(`Warnings:`, file.warnings);
+            }
+          });
+        } else {
+          console.log('No DOCX files found in storage');
+        }
+        
+      } catch (error) {
+        console.error('Error fetching DOCX contents:', error);
+        
+        // Additional debugging info
+        if (error instanceof SyntaxError && error.message.includes('Unexpected token')) {
+          console.error('This usually means the Netlify function is not deployed or returning HTML instead of JSON');
+          console.error('Possible solutions:');
+          console.error('1. Make sure the function is deployed to Netlify');
+          console.error('2. Check if you\'re running locally (use netlify dev)');
+          console.error('3. Verify the function path is correct');
+        }
+      }
+    };
+
+    fetchDocxContents();
+  }, []);
+
   const isActive = (hash: string) => activeHash === hash;
 
   const navLinks = [
