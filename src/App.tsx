@@ -6,8 +6,15 @@ import WhoUses from './components/WhoUses';
 import CTA from './components/CTA';
 import Carousal from './components/Carousal';
 import AgentsInfo from './components/AgentsInfo';
+import Blogs from './components/Blogs';
 
 function App() {
+  const currentPath = window.location.pathname;
+  
+  if (currentPath === '/blogs') {
+    return <Blogs />;
+  }
+  
   return (
     <div className="min-h-screen bg-white">
       <Hero />
