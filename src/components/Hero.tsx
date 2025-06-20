@@ -106,7 +106,8 @@ export default function Hero() {
   const navLinks = [
     { hash: '#benefits', label: 'Benefits' },
     { hash: '#features', label: 'Features' },
-    { hash: '#how-it-works', label: 'How It Works' }
+    { hash: '#how-it-works', label: 'How It Works' },
+    { hash: '/blogs', label: 'Blogs' }
   ];
 
   return (
@@ -131,7 +132,7 @@ export default function Hero() {
                     key={link.hash}
                     href={link.hash}
                     className={`text-gray-300 font-semibold hover:text-[#8b5cf6] transition-all duration-200 hover:scale-105 ${
-                      isActive(link.hash) ? 'text-[#8b5cf6] font-bold border-b-2 border-[#8b5cf6]' : ''
+                      isActive(link.hash) || (link.hash === '/blogs' && window.location.pathname === '/blogs') ? 'text-[#8b5cf6] font-bold border-b-2 border-[#8b5cf6]' : ''
                     }`}
                   >
                     {link.label}
@@ -161,7 +162,7 @@ export default function Hero() {
                 key={link.hash}
                 href={link.hash}
                 className={`block text-gray-300 hover:text-[#8b5cf6] transition-all duration-200 hover:translate-x-2 ${
-                  isActive(link.hash) ? 'text-[#8b5cf6] font-bold' : ''
+                  isActive(link.hash) || (link.hash === '/blogs' && window.location.pathname === '/blogs') ? 'text-[#8b5cf6] font-bold' : ''
                 }`}
               >
                 {link.label}
