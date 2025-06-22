@@ -8,6 +8,7 @@ export interface BlogPost {
   title: string;
   date: string;
   author: string;
+  authorPicture?: string;
   description: string;
   tags: string[];
   image?: string;
@@ -22,6 +23,7 @@ export interface RawBlogPost {
     title: string;
     date: string;
     author: string;
+    authorPicture?: string;
     description: string;
     tags: string[];
     image?: string;
@@ -95,6 +97,7 @@ export function parseMarkdown(markdownContent: string, filename: string): RawBlo
       title: frontmatter.title || 'Untitled',
       date: frontmatter.date || new Date().toISOString().split('T')[0],
       author: frontmatter.author || 'Unknown Author',
+      authorPicture: frontmatter.authorPicture,
       description: frontmatter.description || '',
       tags: Array.isArray(frontmatter.tags) ? frontmatter.tags : [],
       image: frontmatter.image,
@@ -128,6 +131,7 @@ export async function processBlogPost(rawPost: RawBlogPost): Promise<BlogPost> {
     title: rawPost.frontmatter.title,
     date: rawPost.frontmatter.date,
     author: rawPost.frontmatter.author,
+    authorPicture: rawPost.frontmatter.authorPicture,
     description: rawPost.frontmatter.description,
     tags: rawPost.frontmatter.tags,
     image: rawPost.frontmatter.image,
