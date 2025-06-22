@@ -1,97 +1,76 @@
 import { useState, useEffect } from 'react';
-import { Calendar, User, FileText, ChevronRight, Menu, X } from 'lucide-react';
-
-interface BlogFile {
-  name: string;
-  content: string;
-  warnings?: Array<{ type: string; message: string }>;
-}
-
-interface BlogResponse {
-  files: BlogFile[];
-  totalProcessed: number;
-  totalFound: number;
-}
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { Calendar, User, FileText, ChevronRight, Menu, X, Search, Tag, ArrowLeft } from 'lucide-react';
+import { BlogPost } from '../utils/blogUtils';
+import { loadAllBlogs, loadBlogBySlug, getAllTagsAsync } from '../utils/blogLoader';
 
 export default function Blogs() {
-  const [blogs, setBlogs] = useState<BlogFile[]>([]);
+  const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
+  
+  const [blogs, setBlogs] = useState<BlogPost[]>([]);
+  const [currentBlog, setCurrentBlog] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedBlog, setSelectedBlog] = useState<BlogFile | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedTag, setSelectedTag] = useState<string>('');
+  const [availableTags, setAvailableTags] = useState<string[]>([]);
 
   useEffect(() => {
-    fetchBlogs();
-  }, []);
+    loadBlogData();
+  }, [slug]);
 
-  const fetchBlogs = async () => {
+  const loadBlogData = async () => {
     try {
       setLoading(true);
-      
-      // Try to fetch from Netlify function first
-      try {
-        const response = await fetch('/.netlify/functions/getDocxContents');
-        
-        if (response.ok) {
-          const contentType = response.headers.get('content-type');
-          if (contentType && contentType.includes('application/json')) {
-            const data: BlogResponse = await response.json();
-            setBlogs(data.files || []);
-            return;
-          }
+      setError(null);
+
+      if (slug) {
+        // Load individual blog post
+        const blog = await loadBlogBySlug(slug);
+        if (blog) {
+          setCurrentBlog(blog);
+        } else {
+          setError('Blog post not found');
         }
-      } catch (fetchError) {
-        console.log('Netlify function not available, using mock data');
+      } else {
+        // Load all blogs for listing
+        const [allBlogs, tags] = await Promise.all([
+          loadAllBlogs(),
+          getAllTagsAsync()
+        ]);
+        setBlogs(allBlogs);
+        setAvailableTags(tags);
+        setCurrentBlog(null);
       }
-      
-      // Fallback to mock data (using your actual DOCX content)
-      const mockBlogs: BlogFile[] = [
-        {
-          name: "grant_proposal (7).docx",
-          content: `<h1>Grant Proposal</h1>
-          <p>Created on: May 26, 2025 at 11:27 AM</p>
-          <h2>Budget Justification</h2>
-          <p>The budget summary for this project, aimed at addressing educational disparities in under-resourced schools, is meticulously crafted to ensure that every dollar spent contributes directly to achieving the project's goals. The major expenses can be categorized into several key areas: educational technology procurement, teacher training programs, project management, community partnership development, and contingency funds.</p>
-          
-          <h2>Educational Technology Procurement</h2>
-          <p>A significant portion of the budget is allocated to acquiring modern educational technology, such as tablets, laptops, and interactive whiteboards. This investment is justified by the need to bridge the digital divide that exists in under-resourced schools.</p>
-          
-          <h2>Teacher Training Programs</h2>
-          <p>Another major expense is the development and implementation of comprehensive teacher training programs. These programs are designed to equip educators with the skills necessary to effectively utilize the new technology and adopt innovative teaching methods.</p>
-          
-          <h2>Project Management</h2>
-          <p>Effective project management is crucial for the successful execution of the project activities. Funds are allocated for hiring a dedicated project manager who will oversee the implementation of the project, coordinate with stakeholders, and ensure that timelines and milestones are met.</p>`,
-          warnings: [
-            {
-              type: "warning",
-              message: "Unrecognised paragraph style: 'Title' (Style ID: Title)"
-            }
-          ]
-        }
-      ];
-      
-      setBlogs(mockBlogs);
-      
     } catch (err) {
-      console.error('Error fetching blogs:', err);
+      console.error('Error loading blog data:', err);
       setError(err instanceof Error ? err.message : 'Failed to load blogs');
     } finally {
       setLoading(false);
     }
   };
 
-  const formatBlogTitle = (filename: string) => {
-    return filename
-      .replace(/\.docx$/, '')
-      .replace(/[_-]/g, ' ')
-      .replace(/\b\w/g, l => l.toUpperCase());
-  };
+  const filteredBlogs = blogs.filter(blog => {
+    const matchesSearch = searchTerm === '' || 
+      blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      blog.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      blog.content.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesTag = selectedTag === '' || 
+      blog.tags.some(tag => tag.toLowerCase() === selectedTag.toLowerCase());
+    
+    return matchesSearch && matchesTag;
+  });
 
-  const extractDescription = (content: string) => {
-    // Remove HTML tags and get first paragraph
-    const textContent = content.replace(/<[^>]*>/g, '');
-    const sentences = textContent.split('.').slice(0, 2);
-    return sentences.join('.') + (sentences.length > 0 ? '.' : '');
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
   };
 
   const navLinks = [
@@ -106,13 +85,13 @@ export default function Blogs() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center">
-            <a href="/">
+            <Link to="/">
               <img 
                 src="/2.png" 
                 alt="Dialogtuple Logo" 
                 className="h-8 w-auto object-contain" 
               />
-            </a>
+            </Link>
           </div>
           
           {/* Desktop Menu */}
@@ -127,9 +106,12 @@ export default function Blogs() {
                   {link.label}
                 </a>
               ))}
-              <span className="text-[#8b5cf6] font-bold border-b-2 border-[#8b5cf6]">
+              <Link 
+                to="/blogs"
+                className="text-[#8b5cf6] font-bold border-b-2 border-[#8b5cf6]"
+              >
                 Blogs
-              </span>
+              </Link>
             </div>
           </div>
 
@@ -155,9 +137,12 @@ export default function Blogs() {
               {link.label}
             </a>
           ))}
-          <span className="block text-[#8b5cf6] font-bold">
+          <Link
+            to="/blogs"
+            className="block text-[#8b5cf6] font-bold"
+          >
             Blogs
-          </span>
+          </Link>
         </div>
       </div>
     </nav>
@@ -186,13 +171,13 @@ export default function Blogs() {
         <div className="min-h-screen bg-[#1a1b1e] pt-32 pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-8 text-center">
-              <h2 className="text-xl font-bold text-red-400 mb-2">Error Loading Blogs</h2>
-              <p className="text-red-300">{error}</p>
+              <h2 className="text-xl font-bold text-red-400 mb-2">Error Loading Blog</h2>
+              <p className="text-red-300 mb-4">{error}</p>
               <button 
-                onClick={fetchBlogs}
-                className="mt-4 px-6 py-2 bg-[#8b5cf6] text-white rounded-lg hover:bg-[#7c3aed] transition-colors"
+                onClick={() => navigate('/blogs')}
+                className="px-6 py-2 bg-[#8b5cf6] text-white rounded-lg hover:bg-[#7c3aed] transition-colors"
               >
-                Try Again
+                Back to Blogs
               </button>
             </div>
           </div>
@@ -201,48 +186,70 @@ export default function Blogs() {
     );
   }
 
-  if (selectedBlog) {
+  // Individual blog post view
+  if (currentBlog) {
     return (
       <>
         <Navigation />
         <div className="min-h-screen bg-[#1a1b1e] pt-32 pb-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <button
-              onClick={() => setSelectedBlog(null)}
+              onClick={() => navigate('/blogs')}
               className="flex items-center text-[#8b5cf6] hover:text-[#7c3aed] mb-8 transition-colors"
             >
-              <ChevronRight className="w-5 h-5 rotate-180 mr-2" />
+              <ArrowLeft className="w-5 h-5 mr-2" />
               Back to Blogs
             </button>
             
             <article className="bg-[#2a2b2e] rounded-lg p-8 shadow-xl">
               <header className="mb-8 pb-6 border-b border-gray-700">
-                <h1 className="text-3xl font-bold text-white mb-4">
-                  {formatBlogTitle(selectedBlog.name)}
+                {currentBlog.image && (
+                  <div className="w-full h-64 bg-gray-800 rounded-lg mb-6 flex items-center justify-center overflow-hidden">
+                    <img 
+                      src={currentBlog.image} 
+                      alt={currentBlog.title}
+                      className="max-w-full max-h-full object-contain"
+                    />
+                  </div>
+                )}
+                
+                <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                  {currentBlog.title}
                 </h1>
-                <div className="flex items-center text-gray-400 text-sm">
-                  <FileText className="w-4 h-4 mr-2" />
-                  <span className="mr-4">Document</span>
-                  <Calendar className="w-4 h-4 mr-2" />
-                  <span>Latest Version</span>
+                
+                <div className="flex flex-wrap items-center gap-4 text-gray-400 text-sm mb-4">
+                  <div className="flex items-center">
+                    <User className="w-4 h-4 mr-2" />
+                    <span>{currentBlog.author}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Calendar className="w-4 h-4 mr-2" />
+                    <span>{formatDate(currentBlog.date)}</span>
+                  </div>
                 </div>
+                
+                <p className="text-lg text-gray-300 mb-4">
+                  {currentBlog.description}
+                </p>
+                
+                {currentBlog.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {currentBlog.tags.map((tag, index) => (
+                      <span 
+                        key={index}
+                        className="px-3 py-1 bg-[#8b5cf6]/20 text-[#8b5cf6] rounded-full text-sm"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </header>
               
               <div 
-                className="prose prose-invert prose-lg max-w-none"
-                dangerouslySetInnerHTML={{ __html: selectedBlog.content }}
+                className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-p:text-gray-300 prose-a:text-[#8b5cf6] prose-strong:text-white prose-code:text-[#8b5cf6] prose-pre:bg-[#1a1b1e] prose-pre:border prose-pre:border-gray-700"
+                dangerouslySetInnerHTML={{ __html: currentBlog.content }}
               />
-              
-              {selectedBlog.warnings && selectedBlog.warnings.length > 0 && (
-                <div className="mt-8 p-4 bg-yellow-900/20 border border-yellow-500/30 rounded-lg">
-                  <h3 className="text-yellow-400 font-semibold mb-2">Document Warnings:</h3>
-                  <ul className="text-yellow-300 text-sm">
-                    {selectedBlog.warnings.map((warning, index) => (
-                      <li key={index}>• {warning.message}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
             </article>
           </div>
         </div>
@@ -250,6 +257,7 @@ export default function Blogs() {
     );
   }
 
+  // Blog listing view
   return (
     <>
       <Navigation />
@@ -260,44 +268,102 @@ export default function Blogs() {
               Our Blog
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Discover insights, updates, and deep dives into multi-agent AI technology, 
-              chatbot development, and enterprise solutions.
+              Discover insights, updates, and deep dives into AI technology, 
+              automation, and enterprise solutions.
             </p>
           </div>
 
-          {blogs.length === 0 ? (
+          {/* Search and Filter */}
+          <div className="mb-12 flex flex-col md:flex-row gap-4">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search blogs..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 bg-[#2a2b2e] border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#8b5cf6] transition-colors"
+              />
+            </div>
+            
+            <div className="relative">
+              <Tag className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <select
+                value={selectedTag}
+                onChange={(e) => setSelectedTag(e.target.value)}
+                className="pl-10 pr-8 py-3 bg-[#2a2b2e] border border-gray-600 rounded-lg text-white focus:outline-none focus:border-[#8b5cf6] transition-colors appearance-none min-w-[200px]"
+              >
+                <option value="">All Tags</option>
+                {availableTags.map((tag) => (
+                  <option key={tag} value={tag}>
+                    {tag}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {filteredBlogs.length === 0 ? (
             <div className="text-center py-20">
               <FileText className="w-16 h-16 text-gray-500 mx-auto mb-4" />
-              <h2 className="text-xl font-semibold text-gray-400 mb-2">No blogs available</h2>
-              <p className="text-gray-500">Check back later for new content.</p>
+              <h2 className="text-xl font-semibold text-gray-400 mb-2">
+                {searchTerm || selectedTag ? 'No blogs match your criteria' : 'No blogs available'}
+              </h2>
+              <p className="text-gray-500">
+                {searchTerm || selectedTag ? 'Try adjusting your search or filter.' : 'Check back later for new content.'}
+              </p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {blogs.map((blog, index) => (
+              {filteredBlogs.map((blog) => (
                 <article 
-                  key={index}
+                  key={blog.slug}
                   className="bg-[#2a2b2e] rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:transform hover:scale-105 cursor-pointer group"
-                  onClick={() => setSelectedBlog(blog)}
+                  onClick={() => navigate(`/blogs/${blog.slug}`)}
                 >
+                  {blog.image && (
+                    <div className="h-48 overflow-hidden bg-gray-800 flex items-center justify-center">
+                      <img 
+                        src={blog.image} 
+                        alt={blog.title}
+                        className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                  )}
+                  
                   <div className="p-6">
                     <div className="flex items-center text-gray-400 text-sm mb-3">
                       <User className="w-4 h-4 mr-2" />
-                      <span className="mr-4">Dialogtuple Team</span>
+                      <span className="mr-4">{blog.author}</span>
                       <Calendar className="w-4 h-4 mr-2" />
-                      <span>Recent</span>
+                      <span>{formatDate(blog.date)}</span>
                     </div>
                     
                     <h2 className="text-xl font-bold text-white mb-3 group-hover:text-[#8b5cf6] transition-colors">
-                      {formatBlogTitle(blog.name)}
+                      {blog.title}
                     </h2>
                     
-                    <p className="text-gray-300 mb-4 overflow-hidden" style={{
-                      display: '-webkit-box',
-                      WebkitLineClamp: 3,
-                      WebkitBoxOrient: 'vertical'
-                    }}>
-                      {extractDescription(blog.content)}
+                    <p className="text-gray-300 mb-4 line-clamp-3">
+                      {blog.excerpt || blog.description}
                     </p>
+                    
+                    {blog.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {blog.tags.slice(0, 3).map((tag, index) => (
+                          <span 
+                            key={index}
+                            className="px-2 py-1 bg-[#8b5cf6]/10 text-[#8b5cf6] rounded text-xs"
+                          >
+                            #{tag}
+                          </span>
+                        ))}
+                        {blog.tags.length > 3 && (
+                          <span className="px-2 py-1 bg-gray-700 text-gray-400 rounded text-xs">
+                            +{blog.tags.length - 3}
+                          </span>
+                        )}
+                      </div>
+                    )}
                     
                     <div className="flex items-center text-[#8b5cf6] font-semibold group-hover:text-[#7c3aed] transition-colors">
                       <span>Read More</span>
