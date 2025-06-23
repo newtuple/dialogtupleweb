@@ -76,7 +76,7 @@ export default function WhoUses() {
                 className="flex-1"
               >
                 <h3 className="text-3xl font-semibold mb-3 text-white">{user.title}</h3>
-                <p className="text-gray-300 text-xl leading-relaxed opacity-80">{user.description}</p>
+                <p className="text-white text-xl leading-relaxed opacity-80">{user.description}</p>
               </motion.div>
             </motion.div>
           ))}

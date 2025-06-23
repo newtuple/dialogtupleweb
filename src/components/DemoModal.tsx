@@ -59,17 +59,17 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
       <div className="bg-[#1a1b1e] rounded-2xl p-8 max-w-md w-full mx-4 relative shadow-2xl border border-gray-800">
         <button
           onClick={onClose}
-          className="absolute right-6 top-6 text-gray-400 hover:text-[#8b5cf6] transition-colors"
+          className="absolute right-6 top-6 text-white hover:text-[#8b5cf6] transition-colors"
         >
           <X className="w-6 h-6" />
         </button>
 
         <h2 className="text-3xl font-bold mb-3 text-white">Request a Demo</h2>
-        <p className="text-gray-300 mb-8 text-lg">Fill out the form below and we'll get back to you shortly.</p>
+        <p className="text-white mb-8 text-lg">Fill out the form below and we'll get back to you shortly.</p>
 
         <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="name" className="block text-sm font-semibold text-gray-300 mb-2">
+            <label htmlFor="name" className="block text-sm font-semibold text-white mb-2">
               Name
             </label>
             <input
@@ -77,13 +77,13 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
               id="name"
               name="name"
               required
-              className="text-white w-full px-4 py-3 bg-[#2a2b2e] border-2 border-gray-700 rounded-xl focus:ring-2 focus:ring-[#8b5cf6] focus:border-[#8b5cf6] transition-colors placeholder-gray-500"
+              className="text-white w-full px-4 py-3 bg-[#2a2b2e] border-2 border-gray-700 rounded-xl focus:ring-2 focus:ring-[#8b5cf6] focus:border-[#8b5cf6] transition-colors placeholder-gray-400"
               placeholder="Enter your full name"
             />
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-semibold text-gray-300 mb-2">
+            <label htmlFor="email" className="block text-sm font-semibold text-white mb-2">
               Work Email
             </label>
             <input
@@ -91,13 +91,13 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
               id="email"
               name="email"
               required
-              className="text-white w-full px-4 py-3 bg-[#2a2b2e] border-2 border-gray-700 rounded-xl focus:ring-2 focus:ring-[#8b5cf6] focus:border-[#8b5cf6] transition-colors placeholder-gray-500"
+              className="text-white w-full px-4 py-3 bg-[#2a2b2e] border-2 border-gray-700 rounded-xl focus:ring-2 focus:ring-[#8b5cf6] focus:border-[#8b5cf6] transition-colors placeholder-gray-400"
               placeholder="you@company.com"
             />
           </div>
 
           <div>
-            <label htmlFor="company" className="block text-sm font-semibold text-gray-300 mb-2">
+            <label htmlFor="company" className="block text-sm font-semibold text-white mb-2">
               Company
             </label>
             <input
@@ -105,20 +105,20 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
               id="company"
               name="company"
               required
-              className="text-white w-full px-4 py-3 bg-[#2a2b2e] border-2 border-gray-700 rounded-xl focus:ring-2 focus:ring-[#8b5cf6] focus:border-[#8b5cf6] transition-colors placeholder-gray-500"
+              className="text-white w-full px-4 py-3 bg-[#2a2b2e] border-2 border-gray-700 rounded-xl focus:ring-2 focus:ring-[#8b5cf6] focus:border-[#8b5cf6] transition-colors placeholder-gray-400"
               placeholder="Your company name"
             />
           </div>
 
           <div>
-            <label htmlFor="message" className="block text-sm font-semibold text-gray-300 mb-2">
+            <label htmlFor="message" className="block text-sm font-semibold text-white mb-2">
               Message
             </label>
             <textarea
               id="message"
               name="message"
               rows={4}
-              className="text-white w-full px-4 py-3 bg-[#2a2b2e] border-2 border-gray-700 rounded-xl focus:ring-2 focus:ring-[#8b5cf6] focus:border-[#8b5cf6] transition-colors placeholder-gray-500"
+              className="text-white w-full px-4 py-3 bg-[#2a2b2e] border-2 border-gray-700 rounded-xl focus:ring-2 focus:ring-[#8b5cf6] focus:border-[#8b5cf6] transition-colors placeholder-gray-400"
               placeholder="Tell us about your needs..."
             ></textarea>
           </div>

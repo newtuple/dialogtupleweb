@@ -24,7 +24,7 @@ export default function Benefits() {
     <div id="benefits" className="pb-10 bg-[#1a1b1e] scroll-mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-4xl font-bold text-center mb-6 text-white">Enterprise-Ready Multi-Agent Platform</h2>
-        <p className="text-xl text-center mb-16 max-w-3xl text-gray-300 font-semibold leading-relaxed mx-auto">
+        <p className="text-xl text-center mb-16 max-w-3xl text-white font-semibold leading-relaxed mx-auto">
           Built for organizations that demand security, scalability, and complete control over their AI infrastructure
         </p>
         <div className="grid md:grid-cols-3 gap-12">
@@ -54,7 +54,7 @@ export default function Benefits() {
                 transition={{ delay: 0.3 + index * 0.1, duration: 0.2 }}
               >
                 <h3 className="text-2xl font-semibold mb-4 text-center text-white">{benefit.title}</h3>
-                <p className="text-gray-300 text-center text-lg leading-relaxed">{benefit.description}</p>
+                <p className="text-white text-center text-lg leading-relaxed">{benefit.description}</p>
               </motion.div>
             </motion.div>
           ))}

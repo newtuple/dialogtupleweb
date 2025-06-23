@@ -131,7 +131,7 @@ export default function Hero() {
                   <a
                     key={link.hash}
                     href={link.hash}
-                    className={`text-gray-300 font-semibold hover:text-[#8b5cf6] transition-all duration-200 hover:scale-105 ${
+                    className={`text-white font-semibold hover:text-[#8b5cf6] transition-all duration-200 hover:scale-105 ${
                       isActive(link.hash) || (link.hash === '/blogs' && window.location.pathname === '/blogs') ? 'text-[#8b5cf6] font-bold border-b-2 border-[#8b5cf6]' : ''
                     }`}
                   >
@@ -161,7 +161,7 @@ export default function Hero() {
               <a
                 key={link.hash}
                 href={link.hash}
-                className={`block text-gray-300 hover:text-[#8b5cf6] transition-all duration-200 hover:translate-x-2 ${
+                className={`block text-white hover:text-[#8b5cf6] transition-all duration-200 hover:translate-x-2 ${
                   isActive(link.hash) || (link.hash === '/blogs' && window.location.pathname === '/blogs') ? 'text-[#8b5cf6] font-bold' : ''
                 }`}
               >
@@ -190,14 +190,14 @@ export default function Hero() {
               />
             </div>
             <div className={`transition-all duration-1000 delay-300 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              <p className="text-xl text-gray-400 mb-8 tracking-wide">
+              <p className="text-xl text-white mb-8 tracking-wide">
                 by <a href="https://www.newtuple.com" target="_blank" rel="noopener noreferrer" className="font-semibold hover:text-[#8b5cf6] transition-all duration-300 hover:underline decoration-2 underline-offset-4">Newtuple</a>
               </p>
             </div>
             <p className={`text-3xl md:text-4xl lg:text-5xl mb-8 max-w-4xl text-white font-bold leading-tight tracking-tight transition-all duration-1000 delay-500 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               Multi-Agent Chatbots. Enterprise-Ready. Customizable. <span className="bg-gradient-to-r from-[#8b5cf6] via-[#6366f1] to-[#3b82f6] text-transparent bg-clip-text">Anywhere</span>
             </p>
-            <p className={`text-xl md:text-2xl mb-16 max-w-3xl text-gray-300 font-medium leading-relaxed tracking-wide transition-all duration-1000 delay-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <p className={`text-xl md:text-2xl mb-16 max-w-3xl text-white font-medium leading-relaxed tracking-wide transition-all duration-1000 delay-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               A cutting-edge accelerator blending traditional chatbot platforms with modern multi-agent capabilities, enabling intelligent, context-aware routing and interactions.
             </p>
 
@@ -230,8 +230,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-
-      <DemoModal isOpen={isDemoModalOpen} onClose={() => setIsDemoModalOpen(false)} />
     </>
   );
 }

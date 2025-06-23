@@ -6,7 +6,7 @@ export default function CTA() {
     <div className="bg-[#2a2b2e] p-32 y-32 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-4xl font-bold mb-8">Ready to Transform Your Enterprise Conversations?</h2>
-        <p className="text-2xl mb-16 text-gray-300 max-w-4xl mx-auto leading-relaxed">
+        <p className="text-2xl mb-16 text-white max-w-4xl mx-auto leading-relaxed">
           Experience the seamless blend of classic chatbot reliability and advanced AI intelligence with Dialogtuple today.
         </p>
         <div className="flex flex-col sm:flex-row gap-6 justify-center">

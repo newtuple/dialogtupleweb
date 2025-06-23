@@ -7,10 +7,19 @@
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     -webkit-font-smoothing: antialiased;
     scroll-behavior: smooth;
+    @apply text-white;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply tracking-tight;
+    @apply tracking-tight text-white;
+  }
+
+  p {
+    @apply text-white;
+  }
+
+  a {
+    @apply text-white hover:text-[#8b5cf6] transition-colors;
   }
 }
 
