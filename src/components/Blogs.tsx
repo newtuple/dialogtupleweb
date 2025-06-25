@@ -330,7 +330,7 @@ export default function Blogs() {
               </header>
               
               <div 
-                className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-p:text-gray-100 prose-a:text-[#8b5cf6] prose-strong:text-white prose-code:text-[#8b5cf6] prose-pre:bg-[#1a1b1e] prose-pre:border prose-pre:border-gray-700 prose-blockquote:text-gray-100 prose-li:text-gray-100"
+                className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-p:text-gray-100 prose-a:text-[#8b5cf6] prose-strong:text-white prose-code:text-[#8b5cf6] prose-pre:bg-[#1a1b1e] prose-pre:border prose-pre:border-gray-700 prose-blockquote:text-gray-100 prose-li:text-gray-100 prose-img:max-w-full prose-img:h-auto prose-img:rounded-lg prose-img:mx-auto prose-img:block"
                 dangerouslySetInnerHTML={{ __html: currentBlog.content }}
               />
             </article>
