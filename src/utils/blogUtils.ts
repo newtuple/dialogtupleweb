@@ -125,7 +125,15 @@ export async function markdownToHtml(markdownContent: string): Promise<string> {
 export async function processBlogPost(rawPost: RawBlogPost): Promise<BlogPost> {
   const htmlContent = await markdownToHtml(rawPost.content);
   const excerpt = generateExcerpt(rawPost.content);
-  
+
+  let image = rawPost.frontmatter.image;
+  if (image && !image.startsWith('/') && !image.startsWith('http')) {
+    const base = import.meta.env.VITE_S3_BASE_URL as string | undefined;
+    if (base) {
+      image = `${base}/images/${image}`;
+    }
+  }
+
   return {
     slug: rawPost.slug,
     title: rawPost.frontmatter.title,
@@ -134,7 +142,7 @@ export async function processBlogPost(rawPost: RawBlogPost): Promise<BlogPost> {
     authorPicture: rawPost.frontmatter.authorPicture,
     description: rawPost.frontmatter.description,
     tags: rawPost.frontmatter.tags,
-    image: rawPost.frontmatter.image,
+    image,
     content: htmlContent,
     excerpt
   };

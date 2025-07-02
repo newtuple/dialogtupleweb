@@ -1,58 +1,76 @@
 import { BlogPost, parseMarkdown, processBlogPost } from './blogUtils';
 
+const S3_BASE_URL = import.meta.env.VITE_S3_BASE_URL as string | undefined;
+
 // Cache for loaded blogs to avoid re-processing
 let blogCache: BlogPost[] | null = null;
+
+async function loadLocalBlogs(): Promise<BlogPost[]> {
+  // Use Vite's glob import to get all markdown files
+  const modules = import.meta.glob('/src/blogs/posts/*.md', {
+    query: '?raw',
+    import: 'default'
+  });
+
+  const blogPromises: Promise<BlogPost>[] = [];
+
+  for (const [path, moduleLoader] of Object.entries(modules)) {
+    const filename = path.split('/').pop() || '';
+
+    blogPromises.push(
+      (async () => {
+        const markdownContent = (await moduleLoader()) as string;
+        const rawPost = parseMarkdown(markdownContent, filename);
+        return processBlogPost(rawPost);
+      })()
+    );
+  }
+
+  return Promise.all(blogPromises);
+}
+
+async function loadS3Blogs(): Promise<BlogPost[]> {
+  if (!S3_BASE_URL) return [];
+
+  try {
+    const indexRes = await fetch(`${S3_BASE_URL}/index.json`, { cache: 'no-cache' });
+    if (!indexRes.ok) return [];
+    const files: string[] = await indexRes.json();
+
+    const promises = files.map(async (filename) => {
+      const res = await fetch(`${S3_BASE_URL}/posts/${filename}`, { cache: 'no-cache' });
+      if (!res.ok) return null;
+      const markdown = await res.text();
+      const raw = parseMarkdown(markdown, filename);
+      return processBlogPost(raw);
+    });
+
+    const loaded = await Promise.all(promises);
+    return loaded.filter((p): p is BlogPost => p !== null);
+  } catch (err) {
+    console.error('Error loading S3 blogs:', err);
+    return [];
+  }
+}
 
 /**
  * Load all blog posts from the posts directory
  * Uses Vite's import.meta.glob for dynamic imports
  */
 export async function loadAllBlogs(): Promise<BlogPost[]> {
-  // Return cached blogs if available
   if (blogCache) {
     return blogCache;
   }
 
   try {
-    // Use Vite's glob import to get all markdown files (updated syntax)
-    const modules = import.meta.glob('/src/blogs/posts/*.md', { 
-      query: '?raw',
-      import: 'default'
-    });
+    const [localBlogs, s3Blogs] = await Promise.all([
+      loadLocalBlogs(),
+      loadS3Blogs(),
+    ]);
 
-    const blogPromises: Promise<BlogPost>[] = [];
+    const blogs = [...localBlogs, ...s3Blogs];
 
-    // Process each markdown file
-    for (const [path, moduleLoader] of Object.entries(modules)) {
-      const filename = path.split('/').pop() || '';
-      
-      blogPromises.push(
-        (async () => {
-          try {
-            // Load the raw markdown content
-            const markdownContent = await moduleLoader() as string;
-            
-            // Parse the markdown and frontmatter
-            const rawPost = parseMarkdown(markdownContent, filename);
-            
-            // Process into final BlogPost format
-            const processedPost = await processBlogPost(rawPost);
-            
-            return processedPost;
-          } catch (error) {
-            console.error(`Error processing blog post ${filename}:`, error);
-            throw error;
-          }
-        })()
-      );
-    }
-
-    // Wait for all blogs to be processed
-    const blogs = await Promise.all(blogPromises);
-    
-    // Sort by date (newest first) and cache
     blogCache = blogs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-    
     return blogCache;
   } catch (error) {
     console.error('Error loading blogs:', error);
