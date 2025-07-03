@@ -229,6 +229,8 @@ export default function Hero() {
             </div>
           </div>
         </div>
+        <DemoModal isOpen={isDemoModalOpen} onClose={() => setIsDemoModalOpen(false)} />
+
       </div>
     </>
   );
