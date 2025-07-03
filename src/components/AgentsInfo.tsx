@@ -70,7 +70,7 @@ const AgentsInfo = () => {
                   {item.title[0]}
                 </span>
               </div>
-              <h3 className="text-xl font-semibold  text-white ml-4 justify-center align-middle">
+              <h3 className="text-xl font-semibold text-white ml-4 justify-center align-middle">
                 {item.title}
               </h3>
             </div>
@@ -78,7 +78,7 @@ const AgentsInfo = () => {
             <div className="text-sm text-[#8b5cf6] font-medium mb-2">
               {item.subtitle}
             </div>
-            <p className="text-gray-300 text-base leading-relaxed">
+            <p className="text-white text-base leading-relaxed">
               {item.description}
             </p>
           </motion.div>

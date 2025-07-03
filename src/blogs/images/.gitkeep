@@ -1,0 +1,12 @@
+# Blog Images Directory
+
+This directory contains images used in blog posts.
+
+## Usage
+- Add images here that are referenced in your markdown files
+- Use relative paths like `/blogs/images/your-image.jpg` in your markdown
+- Supported formats: .jpg, .jpeg, .png, .gif, .webp
+
+## Example
+For the sample blog post, you would add:
+- getting-started.jpg (referenced in the sample post) 

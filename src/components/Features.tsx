@@ -109,7 +109,6 @@ export default function Features() {
           {/* Center Circle with pulsing effect */}
           <motion.div 
             className="absolute z-50 left-[220px] top-[220px] w-40 h-40 rounded-full bg-black border-2 border-[#8b5cf6] shadow-[0_0_30px_rgba(139,92,246,0.3)] flex items-center justify-center overflow-hidden"
-            // initial={{ scale: 0, opacity: 0 }}
             animate={isInView ? { 
               scale: [1, 1.05, 1],
               opacity: 1,
@@ -237,7 +236,7 @@ export default function Features() {
                           {/* Card glow effect */}
                           <div className="absolute inset-0 bg-gradient-to-r from-[#8b5cf6]/5 via-transparent to-[#8b5cf6]/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                           <h3 className="text-xl font-semibold mb-3 text-white relative">{feature.title}</h3>
-                          <p className="text-gray-300 text-sm leading-relaxed relative">{feature.description}</p>
+                          <p className="text-white text-sm leading-relaxed relative">{feature.description}</p>
                         </div>
                       </motion.div>
                     )}
