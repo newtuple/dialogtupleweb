@@ -195,7 +195,7 @@ export default function Hero() {
               </p>
             </div>
             <p className={`text-3xl md:text-4xl lg:text-5xl mb-8 max-w-4xl text-white font-bold leading-tight tracking-tight transition-all duration-1000 delay-500 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              Multi-Agent Chatbots. Enterprise-Ready. Customizable. <span className="bg-gradient-to-r from-[#8b5cf6] via-[#6366f1] to-[#3b82f6] text-transparent bg-clip-text">Anywhere</span>
+              Multi-Agent Assistants. Enterprise-Ready. Customizable. <span className="bg-gradient-to-r from-[#8b5cf6] via-[#6366f1] to-[#3b82f6] text-transparent bg-clip-text">Anywhere</span>
             </p>
             <p className={`text-xl md:text-2xl mb-16 max-w-3xl text-white font-medium leading-relaxed tracking-wide transition-all duration-1000 delay-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               A cutting-edge accelerator blending traditional chatbot platforms with modern multi-agent capabilities, enabling intelligent, context-aware routing and interactions.
