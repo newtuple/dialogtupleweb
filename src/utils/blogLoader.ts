@@ -21,7 +21,7 @@ async function loadLocalBlogs(): Promise<BlogPost[]> {
       (async () => {
         const markdownContent = (await moduleLoader()) as string;
         const rawPost = parseMarkdown(markdownContent, filename);
-        return processBlogPost(rawPost);
+        return processBlogPost(rawPost, false); // Local blog post
       })()
     );
   }
@@ -42,7 +42,7 @@ async function loadS3Blogs(): Promise<BlogPost[]> {
       if (!res.ok) return null;
       const markdown = await res.text();
       const raw = parseMarkdown(markdown, filename);
-      return processBlogPost(raw);
+      return processBlogPost(raw, true); // S3 blog post
     });
 
     const loaded = await Promise.all(promises);
