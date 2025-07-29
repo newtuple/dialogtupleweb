@@ -277,11 +277,11 @@ export default function Blogs() {
             <article className="bg-[#2a2b2e] rounded-lg p-8 md:p-12 shadow-xl">
               <header className="mb-8 pb-6 border-b border-gray-700">
                 {currentBlog.image && (
-                  <div className="w-full h-64 bg-gray-800 rounded-lg mb-6 flex items-center justify-center overflow-hidden">
+                  <div className="w-full bg-gray-800 rounded-lg mb-6 overflow-hidden">
                     <img 
                       src={currentBlog.image} 
                       alt={currentBlog.title}
-                      className="max-w-full max-h-full object-contain"
+                      className="w-full h-auto max-h-96 object-contain mx-auto"
                     />
                   </div>
                 )}
@@ -405,7 +405,7 @@ export default function Blogs() {
                   className="group bg-[#2a2b2e] rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 hover:shadow-[#8b5cf6]/25 hover:-translate-y-1"
                 >
                   {blog.image && (
-                    <div className="aspect-video bg-gray-800 overflow-hidden">
+                    <div className="aspect-[16/10] bg-gray-800 overflow-hidden">
                       <img 
                         src={blog.image} 
                         alt={blog.title}
