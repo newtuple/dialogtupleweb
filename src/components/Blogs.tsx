@@ -263,6 +263,7 @@ export default function Blogs() {
   if (currentBlog) {
     return (
       <>
+      
         <Navigation />
         <div className="min-h-screen bg-[#1a1b1e] pt-32 pb-16">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -290,18 +291,18 @@ export default function Blogs() {
                   {currentBlog.title}
                 </h1>
                 
-                <div className="flex flex-wrap items-center gap-4 text-gray-200 text-sm mb-4">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-gray-200 text-sm mb-4">
                   <div className="flex items-center">
                     {currentBlog.authorPicture ? (
                       <img 
                         src={currentBlog.authorPicture} 
                         alt={currentBlog.author}
-                        className="w-8 h-8 rounded-full object-cover mr-2"
+                        className="w-50 h-8 rounded-full object-cover mr-3"
                       />
                     ) : (
-                      <User className="w-4 h-4 mr-2" />
+                      <User className="w-50 h-5 mr-3" />
                     )}
-                    <span>{currentBlog.author}</span>
+                    <span className="font-medium">{currentBlog.author}</span>
                   </div>
                   <div className="flex items-center">
                     <Calendar className="w-4 h-4 mr-2" />
@@ -420,10 +421,10 @@ export default function Blogs() {
                         <img 
                           src={blog.authorPicture} 
                           alt={blog.author}
-                          className="w-6 h-6 rounded-full object-cover mr-2"
+                          className="w-50 h-6 rounded-full object-cover mr-2"
                         />
                       ) : (
-                        <User className="w-4 h-4 mr-2" />
+                        <User className="w-50 h-4 mr-2" />
                       )}
                       <span className="mr-4">{blog.author}</span>
                       <Calendar className="w-4 h-4 mr-2" />
